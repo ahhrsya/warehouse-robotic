@@ -928,37 +928,6 @@
       line-height: 1.1;
     }
 
-    /* ─── SECTION 5: SMARTER OPERATIONS ─── */
-    .section-smarter {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding: 120px 80px;
-      align-items: center;
-      column-gap: 80px;
-      max-width: 1400px;
-      margin: 0 auto;
-      box-sizing: border-box;
-    }
-
-    .section-smarter-image {
-      height: 560px;
-    }
-
-    .section-smarter-content {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .section-smarter-content .section-label { margin-bottom: 20px; }
-    .section-smarter-content .section-h2 { max-width: 460px; }
-    .section-smarter-content .section-p { margin-bottom: 36px; }
-
-    .smarter-ctas {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
     /* ─── FOOTER ─── */
     footer {
       background: var(--black);
@@ -1011,8 +980,7 @@
       nav { padding: 0 24px; }
       .nav-links { display: none; }
 
-      .section-hardware,
-      .section-smarter {
+      .section-hardware {
         grid-template-columns: 1fr;
         padding: 64px 24px;
         column-gap: 0;
@@ -1040,8 +1008,7 @@
       .hero-stats { flex-wrap: wrap; gap: 24px; }
 
       .section-hardware-image,
-      .section-routing-image,
-      .section-smarter-image { height: 300px; }
+      .section-routing-image { height: 300px; }
 
       .placeholder-img { min-height: 300px; }
 
@@ -1292,31 +1259,6 @@
           <span class="rsf-label">Uptime</span>
           <span class="rsf-value">99.9%</span>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════ SECTION 5: SMARTER OPERATIONS ═══════════════════════ -->
-  <section class="section-smarter">
-    <div class="section-smarter-image">
-      <div class="placeholder-img">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-          <rect x="6" y="6" width="36" height="36" rx="4" stroke="#ccc" stroke-width="2"/>
-          <circle cx="18" cy="18" r="5" stroke="#ccc" stroke-width="2"/>
-          <path d="M6 32l10-10 8 8 6-6 12 12" stroke="#ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span class="placeholder-label">Image coming soon</span>
-      </div>
-    </div>
-
-    <div class="section-smarter-content">
-      <span class="section-label">The Future of Warehousing</span>
-      <h2 class="section-h2">Smarter Operations. Stronger Outcomes.</h2>
-      <p class="section-p">Let's build the future of your warehouse — together with autonomous robotics you can trust.</p>
-
-      <div class="smarter-ctas">
-        <a href="#" class="btn-primary">Request a Demo</a>
-        <a href="#" class="btn-ghost">Contact Sales →</a>
       </div>
     </div>
   </section>
