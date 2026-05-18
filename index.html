@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Warebotics — Autonomous Intelligence for Modern Warehousing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray-50: #f7f7f7;
+      --gray-100: #efefef;
+      --gray-200: #d9d9d9;
+      --gray-400: #999;
+      --gray-600: #555;
+      --gray-800: #222;
+      --dark-bg: #0d0d0d;
+      --font: 'Manrope', -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--black);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-100);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--black);
+    }
+
+    .nav-logo-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--black);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-logo-icon svg { display: block; }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-600);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--black); }
+
+    .btn-demo {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--black);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 100px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: opacity 0.15s;
+    }
+
+    .btn-demo:hover { opacity: 0.85; }
+
+    .btn-demo svg { flex-shrink: 0; }
+
+    /* ─── SECTION LABEL (hero only — bracket style) ─── */
+    .hero .section-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      font-family: 'Courier New', monospace;
+    }
+
+    .hero .section-label::before { content: '[ '; }
+    .hero .section-label::after  { content: ' ]'; }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding-top: 56px;
+      min-height: 100vh;
+      background: var(--gray-50);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* corner brackets */
+    .corner-tl, .corner-tr, .corner-bl, .corner-br {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      z-index: 10;
+    }
+
+    .corner-tl { top: 72px; left: 16px; border-top: 1.5px solid var(--gray-400); border-left: 1.5px solid var(--gray-400); }
+    .corner-tr { top: 72px; right: 16px; border-top: 1.5px solid var(--gray-400); border-right: 1.5px solid var(--gray-400); }
+    .corner-bl { bottom: 16px; left: 16px; border-bottom: 1.5px solid var(--gray-400); border-left: 1.5px solid var(--gray-400); }
+    .corner-br { bottom: 16px; right: 16px; border-bottom: 1.5px solid var(--gray-400); border-right: 1.5px solid var(--gray-400); }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 80px 72px;
+      z-index: 2;
+      position: relative;
+      min-height: calc(100vh - 56px);
+    }
+
+    .hero-content .section-label { margin-bottom: 28px; }
+
+    .hero-headline {
+      font-size: clamp(40px, 4.5vw, 64px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      margin-bottom: 20px;
+      max-width: 520px;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: var(--gray-600);
+      line-height: 1.6;
+      max-width: 320px;
+      margin-bottom: 36px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 64px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--black);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: opacity 0.15s;
+    }
+
+    .btn-primary:hover { opacity: 0.82; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--black);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      border: 1px solid var(--gray-200);
+      transition: border-color 0.15s;
+    }
+
+    .btn-ghost:hover { border-color: var(--gray-400); }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--black);
+    }
+
+    .stat-sparkline {
+      width: 60px;
+      height: 16px;
+      margin-top: 2px;
+    }
+
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center right;
+      display: block;
+    }
+
+    /* gradient overlay so text stays readable */
+    .hero-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(247,247,247,0.92) 0%,
+        rgba(247,247,247,0.75) 38%,
+        rgba(247,247,247,0.15) 65%,
+        rgba(247,247,247,0) 100%
+      );
+    }
+
+    /* engineering overlay labels */
+    .eng-label {
+      position: absolute;
+      font-family: 'Courier New', monospace;
+      font-size: 9px;
+      color: rgba(0,0,0,0.45);
+      letter-spacing: 0.08em;
+      background: rgba(255,255,255,0.75);
+      padding: 3px 6px;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .eng-label-arm { top: 80px; right: 80px; }
+
+    /* ─── SHARED SECTION STYLES ─── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.13em;
+      color: var(--gray-400);
+      text-transform: uppercase;
+    }
+
+    .section-h2 {
+      font-size: clamp(32px, 3.4vw, 54px);
+      font-weight: 800;
+      line-height: 1.07;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .section-p {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--gray-600);
+      line-height: 1.7;
+      max-width: 400px;
+    }
+
+    /* pill buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 13px 26px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .btn-primary:hover { opacity: 0.8; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--black);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 13px 26px;
+      border-radius: 100px;
+      text-decoration: none;
+      border: 1.5px solid var(--gray-200);
+      transition: border-color 0.15s;
+    }
+
+    .btn-ghost:hover { border-color: var(--gray-800); }
+
+    /* rounded image wrapper */
+    .img-rounded {
+      border-radius: 20px;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+
+    .img-rounded img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* placeholder for missing images */
+    .placeholder-img {
+      width: 100%;
+      height: 100%;
+      min-height: 480px;
+      background: var(--gray-100);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .placeholder-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--gray-400);
+      text-transform: uppercase;
+    }
+
+    /* ─── SECTION 2: HARDWARE/SOFTWARE ─── */
+    .section-hardware {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding: 120px 80px;
+      align-items: center;
+      column-gap: 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    .section-hardware-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .section-hardware-content .section-label { margin-bottom: 20px; }
+    .section-hardware-content .section-h2 { max-width: 420px; }
+    .section-hardware-content .section-p { margin-bottom: 36px; }
+
+    .feature-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+
+    .feature-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 100px;
+      border: 1.5px solid var(--gray-200);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-800);
+      background: var(--white);
+    }
+
+    .feature-chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--black);
+      flex-shrink: 0;
+    }
+
+    .section-hardware-image {
+      height: 520px;
+    }
+
+    /* ─── SECTION 3: ENGINEERED FOR ACCURACY ─── */
+    .section-accuracy-new {
+      display: grid;
+      grid-template-columns: 56% 44%;
+      min-height: 620px;
+      background: #f4f4f4;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* left: image column */
+    .acc-image-col {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .acc-image-col > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* engineering overlay labels */
+    .acc-tech {
+      position: absolute;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .acc-tech-tl { top: 48px; left: 40px; }
+    .acc-tech-bl { bottom: 64px; left: 40px; }
+
+    .acc-tech-sublabel {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.4);
+    }
+
+    .acc-tech-title {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.75);
+    }
+
+    .acc-tech-line {
+      width: 32px;
+      height: 1px;
+      background: rgba(0,0,0,0.18);
+      margin: 5px 0 6px;
+    }
+
+    .acc-tech-value {
+      font-size: 17px;
+      font-weight: 700;
+      color: rgba(0,0,0,0.85);
+      letter-spacing: -0.01em;
+    }
+
+    /* giant background number */
+    .acc-bg-num {
+      position: absolute;
+      bottom: -10px;
+      left: 10px;
+      font-size: 300px;
+      font-weight: 800;
+      line-height: 0.85;
+      color: rgba(0,0,0,0.045);
+      letter-spacing: -0.05em;
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* corner plus marks */
+    .acc-plus {
+      position: absolute;
+      z-index: 3;
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(0,0,0,0.28);
+      line-height: 1;
+    }
+
+    .acc-plus-tl { top: 22px; left: 22px; }
+    .acc-plus-tr { top: 22px; right: 22px; }
+
+    /* right: content column */
+    .acc-content-col {
+      padding: 72px 56px 72px 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      background: #f4f4f4;
+    }
+
+    .acc-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: rgba(0,0,0,0.42);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .acc-label-line {
+      width: 32px;
+      height: 1.5px;
+      background: rgba(0,0,0,0.3);
+      margin-bottom: 28px;
+    }
+
+    .acc-h2 {
+      font-size: clamp(30px, 3vw, 50px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      margin-bottom: 18px;
+    }
+
+    .acc-p {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.65;
+      color: rgba(0,0,0,0.5);
+      margin-bottom: 44px;
+      max-width: 380px;
+    }
+
+    /* stats row */
+    .acc-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 28px;
+    }
+
+    .acc-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      padding-right: 14px;
+      border-right: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .acc-stat:last-child { border-right: none; padding-right: 0; }
+
+    .acc-stat-icon { color: rgba(0,0,0,0.55); line-height: 0; }
+
+    .acc-stat-label {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.38);
+      line-height: 1.3;
+    }
+
+    .acc-stat-value {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      line-height: 1.2;
+    }
+
+    .acc-stat-sub {
+      display: block;
+      font-size: 8px;
+      font-weight: 700;
+      color: rgba(0,0,0,0.55);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+
+    /* vertical side label */
+    .acc-vertical {
+      position: absolute;
+      right: 14px;
+      bottom: 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .acc-vertical-line {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.15));
+    }
+
+    .acc-vertical-text {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: rgba(0,0,0,0.22);
+      text-transform: uppercase;
+    }
+
+    .acc-vertical-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.35);
+    }
+
+    /* ─── CTA SECTION ─── */
+    .section-cta {
+      margin: 0 40px 48px;
+      background: #ebebeb;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 300px;
+      align-items: center;
+    }
+
+    .cta-content {
+      padding: 72px 64px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-h2 {
+      font-size: clamp(28px, 2.8vw, 42px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      margin-bottom: 14px;
+    }
+
+    .cta-p {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: 32px;
+      max-width: 320px;
+    }
+
+    .cta-image {
+      height: 100%;
+      min-height: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cta-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: left center;
+      display: block;
+    }
+
+    /* corner bracket */
+    .cta-corner-br {
+      position: absolute;
+      bottom: 18px;
+      right: 18px;
+      width: 18px;
+      height: 18px;
+      border-bottom: 1.5px solid rgba(0,0,0,0.18);
+      border-right: 1.5px solid rgba(0,0,0,0.18);
+    }
+
+    /* responsive section 3 + CTA */
+    @media (max-width: 960px) {
+      .section-accuracy-new {
+        grid-template-columns: 1fr;
+      }
+      .acc-image-col { min-height: 300px; }
+      .acc-bg-num, .acc-vertical, .acc-plus-tr { display: none; }
+      .acc-content-col { padding: 48px 24px; }
+      .acc-stats { grid-template-columns: repeat(2, 1fr); row-gap: 20px; }
+      .acc-stat { border-right: none; padding-right: 0; }
+
+      .section-cta { margin: 0 16px 32px; grid-template-columns: 1fr; }
+      .cta-content { padding: 48px 24px; }
+      .cta-image { min-height: 240px; }
+    }
+
+    /* ─── SECTION 4: DARK — INTELLIGENT ROUTING (full-bleed) ─── */
+    .section-routing {
+      position: relative;
+      overflow: hidden;
+      min-height: 640px;
+      display: flex;
+      align-items: center;
+      color: var(--white);
+    }
+
+    .section-routing-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .section-routing-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* dark overlay so text is legible */
+    .section-routing-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(10,10,10,0.88) 0%,
+        rgba(10,10,10,0.72) 45%,
+        rgba(10,10,10,0.25) 100%
+      );
+    }
+
+    .section-routing-inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 120px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 60px;
+    }
+
+    .section-routing-content {
+      display: flex;
+      flex-direction: column;
+      max-width: 480px;
+    }
+
+    .section-routing-content .section-label {
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 20px;
+    }
+
+    .section-routing-content .section-h2 {
+      color: var(--white);
+    }
+
+    .section-routing-content .section-p {
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 0;
+    }
+
+    .btn-outline-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 13px 26px;
+      border-radius: 100px;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      margin-top: 36px;
+      align-self: flex-start;
+      transition: border-color 0.2s;
+    }
+
+    .btn-outline-white:hover { border-color: rgba(255,255,255,0.75); }
+
+    /* floating stats card */
+    .routing-stat-float {
+      display: flex;
+      flex-direction: column;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 8px 0;
+      min-width: 180px;
+      flex-shrink: 0;
+    }
+
+    .rsf-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 16px 28px;
+    }
+
+    .rsf-item + .rsf-item {
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .rsf-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .rsf-value {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    /* ─── SECTION 5: SMARTER OPERATIONS ─── */
+    .section-smarter {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 120px 80px;
+      align-items: center;
+      column-gap: 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    .section-smarter-image {
+      height: 560px;
+    }
+
+    .section-smarter-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-smarter-content .section-label { margin-bottom: 20px; }
+    .section-smarter-content .section-h2 { max-width: 460px; }
+    .section-smarter-content .section-p { margin-bottom: 36px; }
+
+    .smarter-ctas {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black);
+      padding: 40px 80px;
+    }
+
+    .footer-inner {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .footer-nav a {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-nav a:hover { color: var(--white); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 960px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+
+      .section-hardware,
+      .section-smarter {
+        grid-template-columns: 1fr;
+        padding: 64px 24px;
+        column-gap: 0;
+        row-gap: 40px;
+      }
+
+      .section-routing-inner {
+        padding: 80px 24px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .routing-stat-float {
+        flex-direction: row;
+        min-width: unset;
+        width: 100%;
+      }
+
+      .rsf-item + .rsf-item {
+        border-top: none;
+        border-left: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .hero-content { padding: 48px 24px 48px; }
+      .hero-stats { flex-wrap: wrap; gap: 24px; }
+
+      .section-hardware-image,
+      .section-routing-image,
+      .section-smarter-image { height: 300px; }
+
+      .placeholder-img { min-height: 300px; }
+
+      footer { padding: 32px 24px; }
+      .footer-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════ NAV ═══════════════════════ -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect x="2" y="2" width="4" height="4" fill="white" rx="0.5"/>
+            <rect x="8" y="2" width="4" height="4" fill="white" rx="0.5" opacity="0.6"/>
+            <rect x="2" y="8" width="4" height="4" fill="white" rx="0.5" opacity="0.6"/>
+            <rect x="8" y="8" width="4" height="4" fill="white" rx="0.5"/>
+          </svg>
+        </div>
+        WAREBOTICS
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#">Solutions</a></li>
+        <li><a href="#">Technology</a></li>
+        <li><a href="#">Systems</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">Company</a></li>
+      </ul>
+
+      <a href="#" class="btn-demo">
+        Request a Demo
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <path d="M2 8L8 2M8 2H4M8 2V6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════ HERO ═══════════════════════ -->
+  <section class="hero">
+    <div class="corner-tl"></div>
+    <div class="corner-tr"></div>
+    <div class="corner-bl"></div>
+    <div class="corner-br"></div>
+
+    <!-- full-bleed background image -->
+    <div class="hero-image">
+      <img src="assets/hero.webp" alt="Warebotics robotic arm — autonomous warehouse system" />
+      <div class="eng-label eng-label-arm">
+        [ ARM-01 ]<br>
+        STATION: ACTIVE<br>
+        MODE: AUTONOMOUS
+      </div>
+    </div>
+
+    <!-- text overlay -->
+    <div class="hero-content">
+      <span class="section-label">System: Active</span>
+      <h1 class="hero-headline">Autonomous Intelligence for Modern Warehousing</h1>
+      <p class="hero-sub">Precision robotics and AI orchestration that move your operations forward.</p>
+
+      <div class="hero-ctas">
+        <a href="#" class="btn-primary">
+          Explore Solutions
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M2 8L8 2M8 2H4M8 2V6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a href="#" class="btn-ghost">
+          See It in Action →
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-label">Active Robots</span>
+          <span class="stat-value">128</span>
+          <svg class="stat-sparkline" viewBox="0 0 60 16" fill="none">
+            <polyline points="0,12 10,10 20,8 30,9 40,6 50,4 60,2" stroke="#0a0a0a" stroke-width="1.5" fill="none" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="stat">
+          <span class="stat-label">System Efficiency</span>
+          <span class="stat-value">98.6%</span>
+          <svg class="stat-sparkline" viewBox="0 0 60 16" fill="none">
+            <polyline points="0,10 10,9 20,10 30,7 40,8 50,5 60,4" stroke="#0a0a0a" stroke-width="1.5" fill="none" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Throughput</span>
+          <span class="stat-value">2.8x</span>
+          <svg class="stat-sparkline" viewBox="0 0 60 16" fill="none">
+            <polyline points="0,14 10,11 20,12 30,9 40,7 50,6 60,3" stroke="#0a0a0a" stroke-width="1.5" fill="none" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 2: HARDWARE + SOFTWARE ═══════════════════════ -->
+  <section class="section-hardware">
+    <div class="section-hardware-content">
+      <span class="section-label">Integrated Platform</span>
+      <h2 class="section-h2">Hardware. Software. Working in Perfect Harmony.</h2>
+      <p class="section-p">A unified system designed for accuracy, scale, and continuous optimization.</p>
+
+      <div class="feature-chips" style="margin-top:28px;">
+        <span class="feature-chip"><span class="feature-chip-dot"></span>Autonomous Navigation</span>
+        <span class="feature-chip"><span class="feature-chip-dot"></span>Intelligent Routing</span>
+        <span class="feature-chip"><span class="feature-chip-dot"></span>Real-Time Adaptation</span>
+      </div>
+
+      <div style="margin-top:8px;">
+        <a href="#" class="btn-primary">Learn More</a>
+      </div>
+    </div>
+
+    <div class="section-hardware-image">
+      <div class="img-rounded">
+        <img src="assets/section-2.webp" alt="Warehouse floor with autonomous mobile robots" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 3: ENGINEERED FOR ACCURACY ═══════════════════════ -->
+  <section class="section-accuracy-new">
+
+    <!-- LEFT: image column -->
+    <div class="acc-image-col">
+      <img src="assets/section-3-ini.webp" alt="6-axis robotic arm engineered for precision" />
+
+      <!-- corner plus marks -->
+      <span class="acc-plus acc-plus-tl">+</span>
+      <span class="acc-plus acc-plus-tr">+</span>
+
+      <!-- big faint number -->
+      <div class="acc-bg-num">06</div>
+
+      <!-- engineering labels -->
+      <div class="acc-tech acc-tech-tl">
+        <span class="acc-tech-sublabel">AXIS / 06</span>
+        <span class="acc-tech-title">MAX PAYLOAD</span>
+        <div class="acc-tech-line"></div>
+        <span class="acc-tech-value">20.0 kg</span>
+      </div>
+
+      <div class="acc-tech acc-tech-bl">
+        <span class="acc-tech-sublabel">JOINT / 04</span>
+        <span class="acc-tech-title">TORQUE</span>
+        <div class="acc-tech-line"></div>
+        <span class="acc-tech-value">320 Nm</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: content column -->
+    <div class="acc-content-col">
+      <span class="acc-label">Engineered for Precision</span>
+      <div class="acc-label-line"></div>
+
+      <h2 class="acc-h2">Engineered<br>for Accuracy.<br>Built for<br>24/7 Performance.</h2>
+      <p class="acc-p">Every component is designed to deliver industrial-grade reliability at scale.</p>
+
+      <div class="acc-stats">
+        <div class="acc-stat">
+          <div class="acc-stat-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="9" stroke-dasharray="3 2"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+              <path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="acc-stat-label">Repeatability</span>
+          <span class="acc-stat-value">±0.02 mm</span>
+        </div>
+        <div class="acc-stat">
+          <div class="acc-stat-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M2 12h4l3-8 4 16 3-8h4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="acc-stat-label">Response Time</span>
+          <span class="acc-stat-value">0.08 ms</span>
+        </div>
+        <div class="acc-stat">
+          <div class="acc-stat-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21.5 2v6h-6M21.3 8A10 10 0 1 0 21 15" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="acc-stat-label">Runtime</span>
+          <span class="acc-stat-value">24/7<span class="acc-stat-sub">Autonomous</span></span>
+        </div>
+        <div class="acc-stat">
+          <div class="acc-stat-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="4" y="8" width="16" height="13" rx="2"/><path d="M9 8V5a3 3 0 0 1 6 0v3" stroke-linecap="round"/><circle cx="12" cy="14" r="1.5"/>
+            </svg>
+          </div>
+          <span class="acc-stat-label">Payload Accuracy</span>
+          <span class="acc-stat-value">99.8%</span>
+        </div>
+      </div>
+
+      <!-- vertical edge label -->
+      <div class="acc-vertical">
+        <div class="acc-vertical-line"></div>
+        <span class="acc-vertical-text">Industrial Intelligence</span>
+        <div class="acc-vertical-dot"></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════ SECTION 4: DARK — INTELLIGENT ROUTING ═══════════════════════ -->
+  <section class="section-routing">
+    <!-- full-bleed background -->
+    <div class="section-routing-bg">
+      <img src="assets/section-4.webp" alt="AI-powered warehouse routing system" />
+    </div>
+
+    <div class="section-routing-inner">
+      <div class="section-routing-content">
+        <span class="section-label">AI Orchestration</span>
+        <h2 class="section-h2">Intelligent Routing. Maximum Throughput.</h2>
+        <p class="section-p">Our AI continuously optimizes every path, balancing speed, workload, and efficiency across your entire facility.</p>
+        <a href="#" class="btn-outline-white">
+          See System in Action
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M2 8L8 2M8 2H4M8 2V6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- floating stats card -->
+      <div class="routing-stat-float">
+        <div class="rsf-item">
+          <span class="rsf-label">Robots Active</span>
+          <span class="rsf-value">128</span>
+        </div>
+        <div class="rsf-item">
+          <span class="rsf-label">Efficiency</span>
+          <span class="rsf-value">98.6%</span>
+        </div>
+        <div class="rsf-item">
+          <span class="rsf-label">Uptime</span>
+          <span class="rsf-value">99.9%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 5: SMARTER OPERATIONS ═══════════════════════ -->
+  <section class="section-smarter">
+    <div class="section-smarter-image">
+      <div class="placeholder-img">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <rect x="6" y="6" width="36" height="36" rx="4" stroke="#ccc" stroke-width="2"/>
+          <circle cx="18" cy="18" r="5" stroke="#ccc" stroke-width="2"/>
+          <path d="M6 32l10-10 8 8 6-6 12 12" stroke="#ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="placeholder-label">Image coming soon</span>
+      </div>
+    </div>
+
+    <div class="section-smarter-content">
+      <span class="section-label">The Future of Warehousing</span>
+      <h2 class="section-h2">Smarter Operations. Stronger Outcomes.</h2>
+      <p class="section-p">Let's build the future of your warehouse — together with autonomous robotics you can trust.</p>
+
+      <div class="smarter-ctas">
+        <a href="#" class="btn-primary">Request a Demo</a>
+        <a href="#" class="btn-ghost">Contact Sales →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ CTA BANNER ═══════════════════════ -->
+  <div class="section-cta">
+    <div class="cta-content">
+      <h2 class="cta-h2">Ready to Elevate<br>Your Operations?</h2>
+      <p class="cta-p">Let's build the future of automation—together.</p>
+      <a href="#" class="btn-primary">
+        Get Started
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <path d="M2 8L8 2M8 2H4M8 2V6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </div>
+    <div class="cta-image">
+      <img src="assets/cta.webp" alt="Warebotics robotic arm" />
+    </div>
+    <div class="cta-corner-br"></div>
+  </div>
+
+  <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <a href="#" class="footer-logo">
+        <div class="nav-logo-icon" style="width:24px;height:24px;">
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+            <rect x="2" y="2" width="4" height="4" fill="white" rx="0.5"/>
+            <rect x="8" y="2" width="4" height="4" fill="white" rx="0.5" opacity="0.6"/>
+            <rect x="2" y="8" width="4" height="4" fill="white" rx="0.5" opacity="0.6"/>
+            <rect x="8" y="8" width="4" height="4" fill="white" rx="0.5"/>
+          </svg>
+        </div>
+        WAREBOTICS
+      </a>
+
+      <ul class="footer-nav">
+        <li><a href="#">Solutions</a></li>
+        <li><a href="#">Technology</a></li>
+        <li><a href="#">Systems</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">Company</a></li>
+      </ul>
+
+      <span class="footer-copy">© 2026 Warebotics. All rights reserved.</span>
+    </div>
+  </footer>
+
+</body>
+</html>
